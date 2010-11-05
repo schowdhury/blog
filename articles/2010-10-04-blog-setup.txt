@@ -1,0 +1,60 @@
+title: Notes from Machine Setup Part 1
+author: Sameer Chowdhury
+date: 2010/10/04
+
+
+So, I'm trying to standardize on an install and procedure so I can work on a chef recipe for subsequent installs:
+
+* Things I want to do fairly quickly:
+  * Set up a toto blog that updates automatically through a git post commit hook
+  * A reverse proxy setup with varnish -> passenger(reverse proxy) -> (rainbow/unicorn/passenger running in rvm under their own rubies and gems)
+  * Run on mongodb entirely or in combination with postgres
+  * setup a chef recipe for getting all of the above in place
+
+So here's the notes.  I'll fill in the gaps with subsequent entries, but this is not comprehensive note taking at this point.
+
+CentOS 5.5
+
+would've preferred ubuntu but let's go with this for now.
+
+apache
+
+don't ask, i would've preferred nginx.  but let's go with this for now.
+
+yum install httpd
+
+sameerchowdhury.com hosted at godaddy.com.  changed nameserver to: NS*.LINODE.COM
+
+added a new a record to linode.com:
+
+*.sameerchowdhury.com
+173.255.231.214
+
+I'm going to setup rails projects with capistrano but I wanted something up quick so here's to instant gratification:
+
+useradd deploy
+chown -R deploy:deploy /var/www
+mkdir -p /var/www/rails/blog/public
+vim /var/www/rails/blog/public/index.html #First Post
+
+vim /etc/httpd/conf/httpd.conf
+
+....
+User deploy
+Group deploy
+....
+
+NameVirtualHost *:80
+
+<VirtualHost *:80>
+    ServerAdmin webmaster@dummy-host.example.com
+    DocumentRoot /var/www/rails/blog/public
+    ServerName blog.sameerchowdhury.com
+    #ErrorLog logs/dummy-host.example.com-error_log
+    #CustomLog logs/dummy-host.example.com-access_log common
+</VirtualHost>
+
+apachectl restart
+
+visit http://blog.sameerchowdhury.com/ and voila: First post
+
