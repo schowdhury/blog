@@ -32,3 +32,4 @@ next up:
 
 when update blog: git post update hook that auto deploys the site
 
+<a href="<%= article.path %>#disqus_thread">0 Comments</a>
