@@ -1,0 +1,34 @@
+title: Notes from Machine Setup Part 2
+author: Sameer Chowdhury
+date: 2010/10/05
+
+One thing I don't have to do is install git from source.  that should help in the chef recipie.  
+
+
+yum install curl gcc make zlib-devel.i386 tcl-devel.i386 tk.i386 tk-devel.i386 openssl-devel.i386  apr-devel.i386 apr-util-devel.i386 httpd-devel.i386 gcc-c++ curl-devel zlib-devel #need tcl/tk for git
+cd /usr/local/src/
+curl http://kernel.org/pub/software/scm/git/git-1.7.3.2.tar.bz2 > git-1.7.3.2.tar.bz2
+tar xvjf git-1.7.3.2.tar.bz2
+cd git
+./configure
+make; make install
+curl ftp://ftp.ruby-lang.org//pub/ruby/1.9/ruby-1.9.2-p0.tar.gz > ruby-1.9.2-p0.tar.gz
+ tar xvzf ruby-1.9.2-p0.tar.gz
+cd ruby-1.9.2-p0
+./configure; make; make install
+gem install passenger
+passenger-install-apache2-module
+
+vi /etc/httpd/conf/httpd.conf
+LoadModule passenger_module /usr/local/lib/ruby/gems/1.9.1/gems/passenger-3.0.0/ext/apache2/mod_passenger.so
+PassengerRoot /usr/local/lib/ruby/gems/1.9.1/gems/passenger-3.0.0
+PassengerRuby /usr/local/bin/ruby
+
+
+gem install rails rack toto
+
+
+next up:
+
+when update blog: git post update hook that auto deploys the site
+
