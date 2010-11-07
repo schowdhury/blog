@@ -108,3 +108,12 @@ body > footer {
   font-size: 18px;
   color: #888;
 }
+
+#blog-title {
+	text-align:center !important;
+	margin: 25px  0 15px !important;
+}
+
+.content > ul, li {
+  list-style-type: disc;
+}
