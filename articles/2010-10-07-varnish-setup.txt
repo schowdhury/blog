@@ -26,6 +26,6 @@ pkill varnishd
 
 varnishd -f /usr/local/etc/varnish/default.vcl -s malloc,100M -T 127.0.0.1:2000
 
-========
+------------------
 
 Now configure apache or your webserver to run on 8080 and when you startup varnish it will by default be running on port 80.  watch your apache logs and varnishlog utility to see how things are being cached.  I'll write more on this later.

@@ -1,0 +1,49 @@
+title: Rvm Unicorn
+author: Sameer Chowdhury
+date: 2010/10/08
+
+
+* install rvm as deploy user
+
+* bash < <( curl http://rvm.beginrescueend.com/releases/rvm-install-head )
+
+* vi ~/.bashrc
+	[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"  # This loads RVM into a shell session.
+
+http://blog.phusion.nl/2010/09/21/phusion-passenger-running-multiple-ruby-versions/
+
+>\<VirtualHost *:80>
+    ServerAdmin webmaster@dummy-host.example.com
+    DocumentRoot /var/www/rails/blog/public
+    ServerName sameerchowdhury.com
+    #ErrorLog logs/dummy-host.example.com-error_log
+    #CustomLog logs/dummy-host.example.com-access_log common
+>\</VirtualHost>
+
+>\<VirtualHost *:80>
+    DocumentRoot /var/www/rails/blog/public
+    ServerName blog.sameerchowdhury.com
+>\</VirtualHost>
+
+>\<VirtualHost *:80>
+    DocumentRoot /var/www/rails/inventory/public
+    ServerName inventory.sameerchowdhury.com
+    PassengerEnabled off
+    ProxyPass / http://127.0.0.1:8080/
+    ProxyPassReverse / http://127.0.0.1:8080
+>\</VirtualHost>
+
+#### following to be handled as deployment by capistrano
+> created new app inventory
+
+	/var/www/rails/inventory
+	rvm install ruby-1.9.2@inventory
+	rvm use ruby-1.9.2@inventory
+	gem install unicorn bundler
+	bundle install
+
+unicorn -D
+
+---------------
+
+[by default unicorn is running in development mode on port 8080](http://inventory.sameerchowdhury.com/items)
