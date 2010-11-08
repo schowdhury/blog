@@ -1,0 +1,31 @@
+title: Varnish Setup
+author: Sameer Chowdhury
+date: 2010/10/07
+
+* curl http://www.varnish-software.com/sites/default/files/varnish-2.1.4.tar.gz > varnish-2.1.4.tar.gz
+
+* tar xvzf varnish-2.1.4.tar.gz
+
+* yum install automake autoconf libtool ncurses-devel libxslt groff pcre-devel pkgconfig
+
+* cd varnish-cache
+* sh autogen.sh
+* sh configure
+* make; make install
+
+config file at:
+> /usr/local/etc/varnish/default.vcl
+
+>	backend default {
+>      .host = "127.0.0.1";
+>      .port = "8080";
+>}
+
+pkill varnishd
+
+
+varnishd -f /usr/local/etc/varnish/default.vcl -s malloc,100M -T 127.0.0.1:2000
+
+========
+
+Now configure apache or your webserver to run on 8080 and when you startup varnish it will by default be running on port 80.  watch your apache logs and varnishlog utility to see how things are being cached.  I'll write more on this later.
