@@ -1,5 +1,7 @@
+require 'rubygems'
 
-require 'toto'
+require 'bundler'
+Bundler.require
 
 # Rack config
 use Rack::Static, :urls => ['/css', '/js', '/images', '/favicon.ico'], :root => 'public'
@@ -31,5 +33,3 @@ toto = Toto::Server.new do
 end
 
 run toto
-
-
